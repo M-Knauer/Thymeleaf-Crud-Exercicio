@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Sistema de Gestão de Pessoas</title>
+<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+<body>
+	<div class="container my-2">
+		<h1>Sistema de Gestão de Pessoas</h1>
+		<hr>
+		<h2>Editar Pessoa</h2>
+		<form action="#" th:action="@{/rh/pessoas/salvar}" th:object="${pessoa}" method="POST">
+			<input type="hidden" id="id" th:field="*{id}"> 
+			
+			<input type="text" th:field="*{nome}" placeholder="Nome" class="form-control mb-4 col-4"> 
+			
+			<input type="date" th:field="*{dtNascimento}" placeholder="Data Nascimento" class="form-control mb-4 col-4"> 
+			
+			<input type="text" th:field="*{cpf}" placeholder="CPF" class="form-control mb-4 col-4">
+			
+			<input type="text" th:field="*{email}" placeholder="Email" class="form-control mb-4 col-4"> 
+			
+			<input type="text" th:field="*{tel}" placeholder="Telefone" class="form-control mb-4 col-4">
+			
+			<button type="submit" class="btn btn-info col-2">Salvar</button>
+		</form>
+		<hr>
+		<a th:href="@{/rh/pessoas}">Retornar para a lista de pessoas</a>
+	</div>
+</body>
+<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+</html>
