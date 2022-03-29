@@ -1,10 +1,13 @@
 package com.exemplo.main.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.exemplo.main.models.Pessoa;
@@ -30,6 +33,26 @@ public class PessoaController {
 	@PostMapping("rh/pessoas/salvar")
 	public String salvar(@ModelAttribute("pessoa") Pessoa pessoa) {
 		ps.save(pessoa);
+		return "redirect:/rh/pessoas";
+	}
+	
+	@GetMapping("rh/pessoas/{id}")
+	public String alterar(@PathVariable Long id, Model model) {
+		Optional<Pessoa> pessoa = ps.findById(id);
+		if (pessoa.isEmpty()) {
+			throw new IllegalArgumentException("Pessoa inválida");
+		}
+		model.addAttribute("pessoa", pessoa.get());
+		return "rh/pessoas/form";
+	}
+	
+	@GetMapping("rh/pessoas/excluir/{id}")
+	public String excluir(@PathVariable Long id) {
+		Optional<Pessoa> pessoa = ps.findById(id);
+		if (pessoa.isEmpty()) {
+			throw new IllegalArgumentException("Pessoa inválida");
+		}
+		ps.deleteById(id);
 		return "redirect:/rh/pessoas";
 	}
 }
