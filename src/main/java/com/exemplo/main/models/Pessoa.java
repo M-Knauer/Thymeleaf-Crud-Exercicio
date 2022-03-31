@@ -4,10 +4,13 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,11 +21,23 @@ public class Pessoa implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@NotBlank(message = "Campo nome não pode ser vazio")
+	@Column(nullable = false)
 	private String nome;
+	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dtNascimento;
+	
+	@Column(nullable = false)
+	@NotBlank(message = "Campo cpf não pode ser vazio")
 	private String cpf;
+	
+	@NotBlank(message = "Campo email não pode ser vazio")
+	@Email(message = "Email precisa ter formato padrão")
+	@Column(nullable = false)
 	private String email;
+	
 	private String tel;
 	
 	public Pessoa() {
@@ -79,6 +94,10 @@ public class Pessoa implements Serializable{
 
 	public String getCpf() {
 		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	@Override

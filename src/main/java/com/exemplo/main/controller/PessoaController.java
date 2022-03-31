@@ -2,9 +2,12 @@ package com.exemplo.main.controller;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +34,10 @@ public class PessoaController {
 	}
 	
 	@PostMapping("rh/pessoas/salvar")
-	public String salvar(@ModelAttribute("pessoa") Pessoa pessoa) {
+	public String salvar(@Valid @ModelAttribute("pessoa") Pessoa pessoa, BindingResult br) {
+		if (br.hasErrors()) {
+			return "rh/pessoas/form";
+		}
 		ps.save(pessoa);
 		return "redirect:/rh/pessoas";
 	}
