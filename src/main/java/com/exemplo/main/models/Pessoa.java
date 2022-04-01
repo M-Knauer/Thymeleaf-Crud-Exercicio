@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -40,16 +41,24 @@ public class Pessoa implements Serializable{
 	
 	private String tel;
 	
+	@ManyToOne
+	private Departamento departamento;
+	
+	@ManyToOne
+	private Cidade cidade;
+	
 	public Pessoa() {
 		
 	}
 
-	public Pessoa(String nome, LocalDate dtNascimento, String cpf, String email, String tel) {
+	public Pessoa(String nome, LocalDate dtNascimento, String cpf, String email, String tel, Departamento departamento, Cidade cidade) {
 		this.nome = nome;
 		this.dtNascimento = dtNascimento;
 		this.cpf = cpf;
 		this.email = email;
 		this.tel = tel;
+		this.departamento = departamento;
+		this.cidade = cidade;
 	}
 
 	public Long getId() {
@@ -100,6 +109,22 @@ public class Pessoa implements Serializable{
 		this.cpf = cpf;
 	}
 
+	public Departamento getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(Departamento departamento) {
+		this.departamento = departamento;
+	}
+
+	public Cidade getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -115,6 +140,13 @@ public class Pessoa implements Serializable{
 			return false;
 		Pessoa other = (Pessoa) obj;
 		return Objects.equals(id, other.id);
+	}
+	
+	public String getNomeDepartamento() {
+		if (departamento != null) {
+			return departamento.getNome();
+		}
+		return "";
 	}
 	
 	
